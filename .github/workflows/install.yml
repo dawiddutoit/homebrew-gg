@@ -10,9 +10,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        runner: [macos-15, macos-15-intel]
+        runner: [macos-15, macos-15-intel, ubuntu-22.04, ubuntu-22.04-arm]
     runs-on: ${{ matrix.runner }}
     steps:
+      - name: Put Linuxbrew on PATH
+        if: runner.os == 'Linux'
+        run: echo /home/linuxbrew/.linuxbrew/bin >> "$GITHUB_PATH"
       - name: Install through Homebrew
         run: brew install dawiddutoit/gg/gg
       - name: Check installed command
