@@ -1,0 +1,22 @@
+name: Install gg from tap
+
+on:
+  push:
+    paths:
+      - Formula/gg.rb
+      - .github/workflows/install.yml
+jobs:
+  install:
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [macos-15, macos-15-intel]
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - name: Install through Homebrew
+        run: brew install dawiddutoit/gg/gg
+      - name: Check installed command
+        run: |
+          gg --version
+          gg config path
+          brew test dawiddutoit/gg/gg
